@@ -1,6 +1,7 @@
-package io.staxex.api.models;
+package io.staxex.api.fxpurchase.models;
 
-import io.staxex.api.enums.Status;
+import io.staxex.api.authentication.models.Trader;
+import io.staxex.api.fxpurchase.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

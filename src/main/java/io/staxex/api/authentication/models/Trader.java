@@ -1,4 +1,4 @@
-package io.staxex.api.models;
+package io.staxex.api.authentication.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LiquidityProvider {
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
+public class Trader {
+    @Id
     @SequenceGenerator(
-            name = "liquidityProviderSequence",
-            sequenceName = "liquidityProviderSequence",
+            name = "traderSequence",
+            sequenceName = "traderSequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "liquidityProviderSequence"
+            generator = "traderSequence"
     )
-    @Id
     private Long id;
-    private String name;
-    private String website;
-    private String contactPerson;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String phoneNumber;
+    private String password;
 
 }
