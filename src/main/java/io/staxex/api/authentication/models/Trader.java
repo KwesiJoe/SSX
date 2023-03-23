@@ -1,9 +1,11 @@
 package io.staxex.api.authentication.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Data
@@ -21,9 +23,13 @@ public class Trader {
             generator = "traderSequence"
     )
     private Long id;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
 
     public Trader(String firstName, String lastName, String email, String password) {

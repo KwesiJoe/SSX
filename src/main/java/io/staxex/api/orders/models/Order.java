@@ -1,7 +1,8 @@
-package io.staxex.api.fxpurchase.models;
+package io.staxex.api.orders.models;
 
 import io.staxex.api.authentication.models.Trader;
-import io.staxex.api.fxpurchase.enums.Status;
+import io.staxex.api.orders.enums.Status;
+import io.staxex.api.providers.models.LiquidityProvider;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "orders")
 public class Order {
     @Id
     private Long id;

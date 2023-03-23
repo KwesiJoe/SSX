@@ -3,7 +3,9 @@ package io.staxex.api.authentication.config;
 import io.staxex.api.authentication.services.JpaUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +28,7 @@ public class SecurityConfig {
         return http
 //                .csrf()
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/api/v1/auth/signup").permitAll()
+                        .requestMatchers("/api/v1/auth/signup", "/api/v1/auth/signin").permitAll()
                         .requestMatchers("/api-docs", "/swagger-ui/*").permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(jpaUserDetailsService)
@@ -45,4 +47,10 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+//            throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 }

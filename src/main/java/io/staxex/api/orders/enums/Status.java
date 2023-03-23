@@ -1,4 +1,4 @@
-package io.staxex.api.fxpurchase.enums;
+package io.staxex.api.orders.enums;
 
 public enum Status {
     PENDING,
