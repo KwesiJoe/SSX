@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class Trader {
     @Id
@@ -27,4 +26,10 @@ public class Trader {
     private String email;
     private String password;
 
+    public Trader(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
 }

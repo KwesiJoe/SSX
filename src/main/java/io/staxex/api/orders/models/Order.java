@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class FxPurchaseRequest {
+public class Order {
     @Id
     private Long id;
     @ManyToOne
