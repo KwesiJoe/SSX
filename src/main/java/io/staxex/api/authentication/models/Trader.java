@@ -1,14 +1,18 @@
 package io.staxex.api.authentication.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class Trader {
@@ -23,16 +27,31 @@ public class Trader {
             generator = "traderSequence"
     )
     private Long id;
-    @NotBlank
+    @NotBlank(message = "first name is required")
     private String firstName;
-    @NotBlank
+    @NotBlank(message = "last name is required")
     private String lastName;
-    @NotBlank
+    @NotBlank(message = "email is required")
     private String email;
-    @NotBlank
+    @NotBlank(message = "password is required")
+    @JsonIgnore
     private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "trader_roles",
+            joinColumns = @JoinColumn(name = "trade_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private Set<Role> roles = new HashSet<>();
+
     public Trader(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Trader(String firstName, String lastName, String email, String password, Role roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
