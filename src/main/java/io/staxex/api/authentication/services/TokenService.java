@@ -1,7 +1,9 @@
 package io.staxex.api.authentication.services;
 
+import io.staxex.api.authentication.models.SecureTraderDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -14,9 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class TokenService {
     private final JwtEncoder encoder;
+    private final JwtDecoder decoder;
 
-    public TokenService(JwtEncoder encoder) {
+    public TokenService(JwtEncoder encoder, JwtDecoder decoder) {
         this.encoder = encoder;
+        this.decoder = decoder;
     }
 
     public String generateToken(Authentication authentication){
@@ -24,14 +28,22 @@ public class TokenService {
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));;
+
+        SecureTraderDetails principal = (SecureTraderDetails) authentication.getPrincipal();
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plus(4, ChronoUnit.HOURS))
-                .subject(authentication.getName())
+                .subject(principal.getUsername())
                 .claim("scope", scope)
                 .build();
+
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
+    public String getEmailFromJwtToken(String jwt) {
+        return this.decoder.decode(jwt).getSubject();
     }
 
 //    Todo invalidate token on logout

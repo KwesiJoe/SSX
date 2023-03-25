@@ -2,11 +2,15 @@ package io.staxex.api.authentication.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,10 +36,14 @@ public class Trader {
     @NotBlank(message = "last name is required")
     private String lastName;
     @NotBlank(message = "email is required")
+    @Email
     private String email;
     @NotBlank(message = "password is required")
     @JsonIgnore
     private String password;
+    @JsonIgnore
+    @CreationTimestamp
+    private Date dateCreated;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

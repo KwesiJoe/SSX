@@ -9,6 +9,7 @@ import io.staxex.api.authentication.payload.response.JwtResponse;
 import io.staxex.api.authentication.repositories.RoleRepository;
 import io.staxex.api.authentication.repositories.TraderRepository;
 import io.staxex.api.exceptions.TraderNotFoundException;
+import io.staxex.api.wallets.services.WalletService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,12 +31,15 @@ public class AuthenticationService {
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationService(TraderRepository traderRepository, PasswordEncoder passwordEncoder, /*, AuthenticationManager authenticationManager*/RoleRepository roleRepository, TokenService tokenService, AuthenticationManager authenticationManager) {
+    private final WalletService walletService;
+
+    public AuthenticationService(TraderRepository traderRepository, PasswordEncoder passwordEncoder, /*, AuthenticationManager authenticationManager*/RoleRepository roleRepository, TokenService tokenService, AuthenticationManager authenticationManager, WalletService walletService) {
         this.traderRepository = traderRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.tokenService = tokenService;
         this.authenticationManager = authenticationManager;
+        this.walletService = walletService;
     }
 
     public Trader createTrader(Trader trader) throws TraderNotFoundException {
@@ -58,7 +62,11 @@ public class AuthenticationService {
 
         newTrader.setRoles(role);
 
-        return traderRepository.save(newTrader);
+        newTrader = traderRepository.save(newTrader);
+
+        walletService.createWallet(newTrader);
+
+        return newTrader;
     }
 
     public JwtResponse authenticateUser(LoginRequest loginRequest){
