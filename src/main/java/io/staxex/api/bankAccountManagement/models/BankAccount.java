@@ -23,10 +23,17 @@ public class BankAccount {
     )
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Trader trader;
     private String bankName;
     private String accountName;
     private String accountNumber;
+
+    public BankAccount(Trader trader, String bankName, String accountName, String accountNumber) {
+        this.trader = trader;
+        this.bankName = bankName;
+        this.accountName = accountName;
+        this.accountNumber = accountNumber;
+    }
 
 }
