@@ -38,7 +38,6 @@ public class BankAccountService {
             BankAccount accountToUpdate = account.get();
             accountToUpdate.setAccountNumber(bankAccount.getAccountNumber());
             accountToUpdate.setAccountName(bankAccount.getAccountName());
-            accountToUpdate.setTrader(bankAccount.getTrader());
             accountToUpdate.setBankName(bankAccount.getBankName());
 
             return bankAccountRepository.save(accountToUpdate);

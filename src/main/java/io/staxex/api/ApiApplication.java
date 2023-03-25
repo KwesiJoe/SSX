@@ -1,12 +1,11 @@
 package io.staxex.api;
 
-import io.staxex.api.authentication.models.Trader;
-import io.staxex.api.authentication.repositories.TraderRepository;
-import org.springframework.boot.CommandLineRunner;
+import io.staxex.api.authentication.config.RsaKeyProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+@EnableConfigurationProperties(RsaKeyProperties.class)
 @SpringBootApplication
 public class ApiApplication {
 
@@ -15,9 +14,38 @@ public class ApiApplication {
 	}
 
 //	@Bean
-//	CommandLineRunner commandLineRunner(TraderRepository traderRepository) {
+//	CommandLineRunner commandLineRunner(RoleRepository roleRepository, BankAccountRepository bankAccountRepository, TraderRepository traderRepository) {
+//		Role TRADER = roleRepository.save(new Role(ERole.ROLE_TRADER));
+//		Role ADMIN = roleRepository.save(new Role(ERole.ROLE_TRADER));
+//
+//		String encodedPassWord =  new BCryptPasswordEncoder().encode("kwesijoe1");
+//
+//		Set<Role> role = new HashSet<>();
+//		role.add(ADMIN);
+//
+//		Trader ADMINUSER = new Trader("joe","larbi","joe@here.com",encodedPassWord);
+//		ADMINUSER.setRoles(role);
+//
+//		BankAccount bankAccount = new BankAccount(ADMINUSER, "Ecobank", "Kwesi Fynn","123456789");
+//
+//
+//
 //		return args -> {
-//			traderRepository.save(new Trader("joe", "larbi", "joe@here.com", "somepass"));
+//			roleRepository.save(new Role(ERole.ROLE_TRADER));
+//			roleRepository.save(new Role(ERole.ROLE_ADMIN));
+//
+//			traderRepository.save(ADMINUSER);
+//
+//			bankAccountRepository.save(bankAccount);
+//
+//		};
+//	}
+
+//	@Bean
+//	CommandLineRunner commandLineRunner(RoleRepository roleRepository){
+//		return args -> {
+//			roleRepository.save(new Role(ERole.ROLE_TRADER));
+//			roleRepository.save(new Role(ERole.ROLE_ADMIN));
 //		};
 //	}
 }

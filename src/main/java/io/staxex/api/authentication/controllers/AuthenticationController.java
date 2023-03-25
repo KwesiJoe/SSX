@@ -22,6 +22,11 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
+//    @GetMapping("/test")
+//    public String testHeaders(@RequestHeader(HttpHeaders.AUTHORIZATION) String accept){
+//        return "this was returned: " + accept;
+//    }
+
     @PostMapping("/signup")
     public ResponseEntity<Trader> createTrader(@Valid @RequestBody SignupRequest trader) throws TraderNotFoundException {
         Trader newTrader = new Trader(trader.getFirstName(), trader.getLastName(), trader.getEmail(), trader.getPassword());

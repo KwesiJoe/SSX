@@ -43,14 +43,14 @@ public class AuthenticationService {
     }
 
     public Trader createTrader(Trader trader) throws TraderNotFoundException {
-        if (traderRepository.existsByEmail(trader.getEmail())) {
+        if (traderRepository.existsByEmail(trader.getEmail().toLowerCase())) {
             throw new TraderNotFoundException("Trader not found");
         }
 
         Trader newTrader = new Trader(
                 trader.getFirstName(),
                 trader.getLastName(),
-                trader.getEmail(),
+                trader.getEmail().toLowerCase(),
                 passwordEncoder.encode(trader.getPassword())
         );
 
@@ -71,7 +71,7 @@ public class AuthenticationService {
 
     public JwtResponse authenticateUser(LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail().toLowerCase(), loginRequest.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -25,12 +25,19 @@ public class BankAccount {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     private Trader trader;
+    private String identifier;
     private String bankName;
     private String accountName;
     private String accountNumber;
 
     public BankAccount(Trader trader, String bankName, String accountName, String accountNumber) {
         this.trader = trader;
+        this.bankName = bankName;
+        this.accountName = accountName;
+        this.accountNumber = accountNumber;
+    }
+
+    public BankAccount(String bankName, String accountName, String accountNumber) {
         this.bankName = bankName;
         this.accountName = accountName;
         this.accountNumber = accountNumber;

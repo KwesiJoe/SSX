@@ -3,8 +3,7 @@ package io.staxex.api.orders.payloads;
 import io.staxex.api.bankAccountManagement.models.BankAccount;
 import lombok.Data;
 
-import java.time.Duration;
-import java.time.Period;
+import java.time.LocalDateTime;
 
 @Data
 public class OrderRequestPayload {
@@ -14,9 +13,9 @@ public class OrderRequestPayload {
     BankAccount paymentAccount;
     String deliveryMethod;
     BankAccount deliveryAccount;
-    Duration timeframe;
+    LocalDateTime timeframe;
 
-    public OrderRequestPayload(String currencyPair, String paymentMethod, BankAccount paymentAccount, String deliveryMethod, BankAccount deliveryAccount, Duration timeframe) {
+    public OrderRequestPayload(String currencyPair, String paymentMethod, BankAccount paymentAccount, String deliveryMethod, BankAccount deliveryAccount, LocalDateTime timeframe) {
         this.currencyPair = currencyPair;
         this.paymentMethod = paymentMethod;
         this.paymentAccount = paymentAccount;

@@ -1,6 +1,5 @@
 package io.staxex.api.providers.services;
 
-import io.staxex.api.bankAccountManagement.models.BankAccount;
 import io.staxex.api.providers.models.LiquidityProvider;
 import io.staxex.api.providers.repositories.LiquidityProviderRepository;
 import org.springframework.data.domain.Sort;

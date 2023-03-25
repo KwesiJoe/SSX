@@ -1,9 +1,6 @@
 package io.staxex.api.orders.services;
 
 import io.staxex.api.authentication.models.Trader;
-import io.staxex.api.bankAccountManagement.controllers.BankAccountsController;
-import io.staxex.api.bankAccountManagement.models.BankAccount;
-import io.staxex.api.bankAccountManagement.repositories.BankAccountRepository;
 import io.staxex.api.bankAccountManagement.services.BankAccountService;
 import io.staxex.api.exceptions.InsufficientFundsException;
 import io.staxex.api.orders.enums.Status;
@@ -11,10 +8,7 @@ import io.staxex.api.orders.models.Order;
 import io.staxex.api.orders.payloads.OrderRequestPayload;
 import io.staxex.api.orders.payloads.OrderResponsePayload;
 import io.staxex.api.orders.repositories.OrderRepository;
-import io.staxex.api.wallets.models.Wallet;
 import io.staxex.api.wallets.services.WalletService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

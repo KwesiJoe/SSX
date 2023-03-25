@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.net.URL;
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -29,6 +30,10 @@ public class LiquidityProvider {
     private String contactPerson;
     private String email;
     private String phoneNumber;
+
+    @JsonIgnore
+    @CreationTimestamp
+    private Date dateCreated;
 
     @JsonIgnore
     private String apiUrl;

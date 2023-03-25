@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
-import java.time.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -39,7 +38,7 @@ public class Order {
     private LocalDateTime dateRequested;
     private LocalDateTime dateCompleted;
 
-    private Duration timeframe;
+    private LocalDateTime timeframe;
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -48,7 +47,7 @@ public class Order {
                  LiquidityProvider liquidityProvider,
                  BigDecimal amountRequested,
                  BankAccount deliveryAccount,
-                 Duration timeframe
+                 LocalDateTime timeframe
     ) {
         this.trader = trader;
         this.currencyPair = currencyPair;
@@ -59,8 +58,9 @@ public class Order {
     }
 
     public Boolean isElapsed(){
-        Duration timeSinceRequest= Duration.between(this.dateRequested, LocalDateTime.now());
-        return (timeframe.compareTo(timeSinceRequest) > 0);
+//        Long timeSinceRequest= this.dateRequested.LocalDateTime.now());
+//        this.timeframe.t
+        return (this.timeframe.isAfter(LocalDateTime.now()));
     }
 
 //    if the time elapses, send email to the user asking if she would like to cancell order
