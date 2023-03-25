@@ -1,9 +1,12 @@
 package io.staxex.api.providers.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.net.URL;
 
 @Entity
 @AllArgsConstructor
@@ -27,4 +30,17 @@ public class LiquidityProvider {
     private String email;
     private String phoneNumber;
 
+    @JsonIgnore
+    private String apiUrl;
+
+    @JsonIgnore
+    private String apiToken;
+
+    public LiquidityProvider(String name, String website, String contactPerson, String email, String phoneNumber) {
+        this.name = name;
+        this.website = website;
+        this.contactPerson = contactPerson;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
 }
