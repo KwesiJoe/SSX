@@ -9,6 +9,7 @@ import io.staxex.api.orders.payloads.OrderRequestPayload;
 import io.staxex.api.orders.payloads.OrderResponsePayload;
 import io.staxex.api.orders.repositories.OrderRepository;
 import io.staxex.api.wallets.services.WalletService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -54,22 +55,39 @@ public class OrderService {
         return orderRepository.findOrdersByTrader(trader);
     }
 
-    public Order createOrder(Order order) throws InsufficientFundsException {
-        BigDecimal availableFunds = walletService.getWallet(order.getTrader())
-                .getBalance();
-        if (availableFunds.compareTo(order.getAmountRequested()) < 0) {
-            throw new InsufficientFundsException("Not enough funds in the wallet to place this order.");
+    public Order updateOrder(Long id, Order updatedOrder) {
+        Optional<Order> optionalOrder = orderRepository.findById(id);
+        if (optionalOrder.isEmpty()) {
+            throw new EntityNotFoundException("Order not found with ID: " + id);
         }
+        Order order = optionalOrder.get();
+        order.setCurrencyPair(updatedOrder.getCurrencyPair());
+        order.setLiquidityProvider(updatedOrder.getLiquidityProvider());
+        order.setAmountRequested(updatedOrder.getAmountRequested());
+        order.setAmountFulfilled(updatedOrder.getAmountFulfilled());
+        order.setExchangeRate(updatedOrder.getExchangeRate());
+        order.setDeliveryAccount(updatedOrder.getDeliveryAccount());
+        order.setTimeframe(updatedOrder.getTimeframe());
+        order.setStatus(updatedOrder.getStatus());
+        orderRepository.save(order);
+        return order;
+    }
+
+    public Order createOrder(Order order) throws InsufficientFundsException {
+//        BigDecimal availableFunds = order.getWallet().getBalance();
+//        if (availableFunds.compareTo(order.getAmountRequested()) < 0) {
+//            throw new InsufficientFundsException("Not enough funds in the wallet to place this order.");
+//        }
 
         Order newOrder = orderRepository.save(order);
 
-        OrderResponsePayload response = makeOrder(newOrder);
-        if (response != null) {
-            newOrder.setStatus(response.getStatus());
-        } else {
-            newOrder.setStatus(Status.FAILED);
-        }
-        orderRepository.save(newOrder);
+//        OrderResponsePayload response = makeOrder(newOrder);
+//        if (response != null) {
+//            newOrder.setStatus(response.getStatus());
+//        } else {
+//            newOrder.setStatus(Status.FAILED);
+//        }
+//        orderRepository.save(newOrder);
 
         return newOrder;
     }
@@ -79,7 +97,7 @@ public class OrderService {
         OrderRequestPayload orderRequestPayload = new OrderRequestPayload(
                 order.getCurrencyPair(),
                 DEFAULTPAYMENTMETHOD,
-                bankAccountService.getBankAccount(1L).get(),
+                order.getWallet(),
                 DEFAULTDELIVERYMETHOD,
                 order.getDeliveryAccount(),
                 order.getTimeframe()

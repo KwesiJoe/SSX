@@ -29,8 +29,17 @@ public class Wallet {
     @Column(scale = 2, precision = 10)
     private BigDecimal balance;
 
-    public Wallet(Trader trader) {
+    private String currency;
+
+    public Wallet(Trader trader, String currency) {
         this.trader = trader;
+        this.currency = currency;
         this.balance = BigDecimal.valueOf(0);
+    }
+
+    public Wallet(Trader trader, String currency, BigDecimal balance) {
+        this.trader = trader;
+        this.currency = currency;
+        this.balance = balance;
     }
 }

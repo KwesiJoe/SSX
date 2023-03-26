@@ -18,6 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/bankaccounts")
 public class BankAccountsController {
     private BankAccountService bankAccountService;
@@ -39,6 +40,7 @@ public class BankAccountsController {
         Trader trader = traderRepository.findByEmail(email).get();
 
         BankAccount bankAccount = new BankAccount(
+                bankAccountdetails.getIdentifier(),
                 trader,
                 bankAccountdetails.getBankName(),
                 bankAccountdetails.getAccountName(),

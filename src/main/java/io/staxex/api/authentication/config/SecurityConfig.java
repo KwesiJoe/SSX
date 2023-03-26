@@ -9,6 +9,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import io.staxex.api.authentication.services.JpaUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -79,6 +80,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
+                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .requestMatchers("/api/auth/signup","/api/auth/signin").permitAll()
                         .requestMatchers("/api-docs","/v3/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())

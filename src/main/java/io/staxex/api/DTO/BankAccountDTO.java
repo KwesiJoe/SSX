@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class BankAccountDTO {
+    private String identifier;
     private String bankName;
     private String accountName;
     private String accountNumber;

@@ -64,8 +64,6 @@ public class AuthenticationService {
 
         newTrader = traderRepository.save(newTrader);
 
-        walletService.createWallet(newTrader);
-
         return newTrader;
     }
 

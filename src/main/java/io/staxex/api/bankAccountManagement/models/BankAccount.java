@@ -30,6 +30,13 @@ public class BankAccount {
     private String accountName;
     private String accountNumber;
 
+    public BankAccount(String identifier, Trader trader, String bankName, String accountName, String accountNumber) {
+        this.identifier= identifier;
+        this.trader = trader;
+        this.bankName = bankName;
+        this.accountName = accountName;
+        this.accountNumber = accountNumber;
+    }
     public BankAccount(Trader trader, String bankName, String accountName, String accountNumber) {
         this.trader = trader;
         this.bankName = bankName;

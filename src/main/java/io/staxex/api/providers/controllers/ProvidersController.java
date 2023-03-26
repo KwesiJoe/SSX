@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/providers")
 public class ProvidersController {
 
@@ -37,7 +38,7 @@ public class ProvidersController {
                 .body(liquidityProviderService.addProvider(provider));
     }
 
-    @GetMapping()
+    @GetMapping("/list")
     public List<LiquidityProvider> geAllProviders(){
         return liquidityProviderService.getAllProviders();
     }

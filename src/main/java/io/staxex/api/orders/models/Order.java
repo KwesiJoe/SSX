@@ -4,6 +4,7 @@ import io.staxex.api.authentication.models.Trader;
 import io.staxex.api.bankAccountManagement.models.BankAccount;
 import io.staxex.api.orders.enums.Status;
 import io.staxex.api.providers.models.LiquidityProvider;
+import io.staxex.api.wallets.models.Wallet;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,15 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 public class Order {
     @Id
+    @SequenceGenerator(
+            name = "orderSequence",
+            sequenceName = "orderSequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "orderSequence"
+    )
     private Long id;
     @ManyToOne
     private Trader trader;
@@ -42,6 +52,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @OneToOne
+    private Wallet wallet;
+
     public Order(Trader trader,
                  String currencyPair,
                  LiquidityProvider liquidityProvider,
@@ -55,6 +68,23 @@ public class Order {
         this.amountRequested = amountRequested;
         this.deliveryAccount = deliveryAccount;
         this.timeframe = timeframe;
+    }
+
+    public Order(Trader trader,
+                 String currencyPair,
+                 LiquidityProvider liquidityProvider,
+                 BigDecimal amountRequested,
+                 BankAccount deliveryAccount,
+                 LocalDateTime timeframe,
+                 Wallet wallet
+    ) {
+        this.trader = trader;
+        this.currencyPair = currencyPair;
+        this.liquidityProvider = liquidityProvider;
+        this.amountRequested = amountRequested;
+        this.deliveryAccount = deliveryAccount;
+        this.timeframe = timeframe;
+        this.wallet = wallet;
     }
 
     public Boolean isElapsed(){
